@@ -305,6 +305,8 @@ public class MainActivity extends AppCompatActivity {
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
         private byte[] mmBuffer; // mmBuffer store for the stream
+        private byte[] mmTempBuffer; // Buffer to make the final array before sending.
+        private short lastArrayIndex;
 
         public ConnectedThread(BluetoothSocket socket) throws IOException {
             mmSocket = socket;
@@ -328,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
             mmOutStream = tmpOut;
         }
         public void run() {
+            mmTempBuffer = new byte[10];
             mmBuffer = new byte[10];
             int numBytes; // bytes returned from read()
             // Keep listening to the InputStream until an exception occurs.
@@ -335,10 +338,15 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     // Read from the InputStream.
 
-                    numBytes = mmInStream.read(mmBuffer, 0, mmBuffer.length);
+                    numBytes = mmInStream.read(mmTempBuffer, 0, mmTempBuffer.length);
                     // Send the obtained bytes to the UI activity.
+
+                    for(int i = lastArrayIndex; i <= (lastArrayIndex+numBytes-1); i++){
+                        mmBuffer[i] = mmTempBuffer[i-lastArrayIndex];
+                    }
+                    lastArrayIndex += numBytes;
                     Message readMsg = handler.obtainMessage(
-                            MessageConstants.MESSAGE_READ, numBytes, -1,
+                            MessageConstants.MESSAGE_READ, lastArrayIndex, -1,
                             mmBuffer);
                     readMsg.sendToTarget();
                 } catch (IOException e) {
