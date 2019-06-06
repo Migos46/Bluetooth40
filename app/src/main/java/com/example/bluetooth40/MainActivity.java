@@ -138,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
                                           @Override
                                           public void onClick(View v) {
                                               byteToInt();
-                                              final String mDataFromBlueT = new String(mIntArrayTest, 0, mArrayTest.length);
-                                              showDataFromBlueT.setText(mDataFromBlueT);
+                                              showDataFromBlueT.setText(String.valueOf(mArrayTest));
                                           }
                                       });
 
