@@ -138,8 +138,8 @@ public class MainActivity extends AppCompatActivity {
                                           @Override
                                           public void onClick(View v) {
                                               byteToInt();
-                                              /*final String mDataFromBlueT = new String(mIntArrayTest, 0, mArrayTest.length);
-                                              showDataFromBlueT.setText(mDataFromBlueT);*/
+                                              final String mDataFromBlueT = new String(mIntArrayTest, 0, mArrayTest.length);
+                                              showDataFromBlueT.setText(mDataFromBlueT);
                                           }
                                       });
 
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < mArrayTest.length; i++) {
             mIntArrayTest[i] = (mArrayTest[i] & bitWise);
         }
-        for(int j=0; j<mArrayTest.length;j++){
+        for(int j=9800; j<mArrayTest.length;j++){
             //TODO: Log.i statement
             String TAG = "mArrayTest:  ";
             Log.i(TAG, "Position: "+ j + "= " + mIntArrayTest[j]);
@@ -330,8 +330,8 @@ public class MainActivity extends AppCompatActivity {
             mmOutStream = tmpOut;
         }
         public void run() {
-            mmTempBuffer = new byte[10];
-            mmBuffer = new byte[10];
+            mmTempBuffer = new byte[9840];
+            mmBuffer = new byte[9840];
             int numBytes; // bytes returned from read()
             // Keep listening to the InputStream until an exception occurs.
             while (true) {
